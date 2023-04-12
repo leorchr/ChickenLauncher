@@ -18,13 +18,13 @@ public class ChickenProjectile : MonoBehaviour
         chicken = Instantiate(chickenPrefab, transform.position, transform.rotation);
         rbChicken = chicken.transform.GetChild(0).GetComponent<Rigidbody>();
         rbChicken.AddRelativeForce(new Vector3(0, 0, PlayerMovement.instance.launchPower));
-        PlayerMovement.instance.launchPower = 250f;
+        PlayerMovement.instance.launchPower = 750f;
         rbChicken.AddTorque(transform.right * 500);
         chickenAudioManager = chicken.transform.GetChild(0).GetComponent<ChickenAudioManager>();
         chickenAudioManager.PlayClip(1); 
     }
 
-    public IEnumerator delayBeforeShoot(SkinnedMeshRenderer meshRenderer)
+    public IEnumerator DelayBeforeShoot(SkinnedMeshRenderer meshRenderer)
     {
         yield return new WaitForSeconds(PlayerMovement.instance.delayBetweenShoot);
         meshRenderer.enabled = true;

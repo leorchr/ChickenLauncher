@@ -38,7 +38,7 @@ public class ChickenAnimation : MonoBehaviour
         finishedAction = true;
         meshRenderer.enabled = false;
         chickenProjectile.StartLaunch();
-        coroutine = chickenProjectile.delayBeforeShoot(meshRenderer);
+        coroutine = chickenProjectile.DelayBeforeShoot(meshRenderer);
         StartCoroutine(coroutine);
     }
 

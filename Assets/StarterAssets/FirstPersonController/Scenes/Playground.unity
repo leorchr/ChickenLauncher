@@ -992,7 +992,6 @@ MonoBehaviour:
   chickenPrefab: {fileID: 1432734267005606343, guid: cac17e0e4963c84439073d862948bde4,
     type: 3}
   torqueStrenght: 250
-  launchVelocity: 1000
 --- !u!1 &1028513131
 GameObject:
   m_ObjectHideFlags: 0
@@ -1543,7 +1542,9 @@ MonoBehaviour:
   moveSmoothTime: 0.2
   chickenAnimation: {fileID: 1255922676}
   canShoot: 1
-  delayBetweenShoot: 1.5
+  delayBetweenShoot: 0.1
+  launchPower: 750
+  maxLaunchPower: 1250
 --- !u!114 &2034548571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1604,6 +1605,11 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1888427756403250876, guid: 09aade0ecefd01e4b8f7661acf64f5c2,
+        type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     - target: {fileID: 8345070699079395522, guid: 09aade0ecefd01e4b8f7661acf64f5c2,
         type: 3}
       propertyPath: m_RootOrder
@@ -1663,6 +1669,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Environment
+      objectReference: {fileID: 0}
+    - target: {fileID: 8345070700331616361, guid: 09aade0ecefd01e4b8f7661acf64f5c2,
+        type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

@@ -13,6 +13,7 @@ public class ChickenCollision : MonoBehaviour
     private GameObject explosion;
     [SerializeField] private SkinnedMeshRenderer meshRenderer;
     private Vector3 direction;
+    [SerializeField] private GameObject eggPrefab;
 
     private void Start()
     {
@@ -30,6 +31,7 @@ public class ChickenCollision : MonoBehaviour
             Destroy(explosion, 3);
             hasTouched = true;
             meshRenderer.enabled = false;
+            Instantiate(eggPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject,3);
         }
     }
