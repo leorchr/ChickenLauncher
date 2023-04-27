@@ -30,8 +30,9 @@ public class PlayerMovement : MonoBehaviour
     public bool canShoot = true;
     public float delayBetweenShoot = 2f;
     private bool startLaunch = false;
-    public float launchPower = 250f;
-    public float maxLaunchPower = 750f;
+    public float startLaunchPower = 750f;
+    public float launchPower = 750f;
+    public float maxLaunchPower = 1250f;
 
     #endregion
 

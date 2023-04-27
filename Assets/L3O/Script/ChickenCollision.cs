@@ -32,6 +32,7 @@ public class ChickenCollision : MonoBehaviour
             hasTouched = true;
             meshRenderer.enabled = false;
             Instantiate(eggPrefab, transform.position, Quaternion.identity);
+            Score.Instance.ShowAddScore();
             Destroy(gameObject,3);
         }
     }

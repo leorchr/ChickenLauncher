@@ -15,5 +15,7 @@ public class ChickenMovement : MonoBehaviour
     {
         Vector3 deplacement = transform.forward * speed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + deplacement);
+        gameObject.transform.GetChild(0).GetComponentInChildren<Animator>().SetBool("Run", true);
+
     }
 }

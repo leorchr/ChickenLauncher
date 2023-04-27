@@ -18,7 +18,7 @@ public class ChickenProjectile : MonoBehaviour
         chicken = Instantiate(chickenPrefab, transform.position, transform.rotation);
         rbChicken = chicken.transform.GetChild(0).GetComponent<Rigidbody>();
         rbChicken.AddRelativeForce(new Vector3(0, 0, PlayerMovement.instance.launchPower));
-        PlayerMovement.instance.launchPower = 750f;
+        PlayerMovement.instance.launchPower = PlayerMovement.instance.startLaunchPower;
         rbChicken.AddTorque(transform.right * 500);
         chickenAudioManager = chicken.transform.GetChild(0).GetComponent<ChickenAudioManager>();
         chickenAudioManager.PlayClip(1); 
