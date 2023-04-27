@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using TMPro;
-using UnityEditor.Build;
 using UnityEngine;
-using UnityEngine.InputSystem.WebGL;
 
 public class Score : MonoBehaviour
 {
@@ -15,6 +13,8 @@ public class Score : MonoBehaviour
 
     [SerializeField] private GameObject scoreText;
     private int score;
+
+    [SerializeField] private int scoreNeeded;
 
     [SerializeField] private GameObject powerText;
     [SerializeField] int powerAmount;
@@ -29,7 +29,7 @@ public class Score : MonoBehaviour
         scoreProfit.SetActive(false);
         score = 0;
         scoreText.SetActive(true);
-        scoreText.GetComponent<TextMeshProUGUI>().text = score.ToString() + " / 5 000";
+        scoreText.GetComponent<TextMeshProUGUI>().text = score.ToString() + " / " + scoreNeeded;
         sound = gameObject.GetComponent<ScoreSound>();
         divCount = 0;
     }
@@ -47,12 +47,13 @@ public class Score : MonoBehaviour
     {
         score += scoreAdd;
         PlaySound();
-        scoreText.GetComponent<TextMeshProUGUI>().text = score.ToString() + " / 5 000";
-        if(score >= 5000)
+        scoreText.GetComponent<TextMeshProUGUI>().text = score.ToString() + " / " + scoreNeeded;
+        if(score >= scoreNeeded)
         {
             PlayerMovement.instance.startLaunchPower += powerAmount;
             PlayerMovement.instance.maxLaunchPower += powerAmount;
             score = 0;
+            scoreText.GetComponent<TextMeshProUGUI>().text = score.ToString() + " / " + scoreNeeded;
             powerText.GetComponent<TextMeshProUGUI>().text = "+ " + powerAmount + " POWER";
             powerText.SetActive(true);
             StartCoroutine(WaiterPower());
