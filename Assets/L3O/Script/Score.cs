@@ -50,6 +50,7 @@ public class Score : MonoBehaviour
         scoreText.GetComponent<TextMeshProUGUI>().text = score.ToString() + " / " + scoreNeeded;
         if(score >= scoreNeeded)
         {
+            divCount = 0;
             PlayerMovement.instance.startLaunchPower += powerAmount;
             PlayerMovement.instance.maxLaunchPower += powerAmount;
             score = 0;
