@@ -2,9 +2,12 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.VisualScripting;
 
 public class LookWithMouse : MonoBehaviour
 {
+    public static LookWithMouse instance;
+
     const float k_MouseSensitivityMultiplier = 0.01f;
 
     [SerializeField] private PlayerInput playerInput;
@@ -19,9 +22,12 @@ public class LookWithMouse : MonoBehaviour
     [SerializeField][Range(-90.0f, 0)] private float minAngle = -90f;
     [SerializeField][Range(0, 90.0f)] private float maxAngle = 90f;
 
+    private float mouseLock = 1f;
 
-    void Start()
+    void Awake()
     {
+        if (instance) Destroy(this);
+        else instance = this;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -29,8 +35,6 @@ public class LookWithMouse : MonoBehaviour
 
     void Update()
     {
-        bool unlockPressed = false, lockPressed = false;
-
         float mouseX = 0, mouseY = 0;
 
         if (Mouse.current != null)
@@ -38,17 +42,12 @@ public class LookWithMouse : MonoBehaviour
             var delta = Mouse.current.delta.ReadValue() / 15.0f;
             mouseX += delta.x;
             mouseY += delta.y;
-            lockPressed = Mouse.current.leftButton.wasPressedThisFrame || Mouse.current.rightButton.wasPressedThisFrame;
         }
         if (Gamepad.current != null)
         {
             var value = Gamepad.current.rightStick.ReadValue() * 2;
             mouseX += value.x;
             mouseY += value.y;
-        }
-        if (Keyboard.current != null)
-        {
-            unlockPressed = Keyboard.current.escapeKey.wasPressedThisFrame;
         }
 
         if (playerInput.currentControlScheme == "Controller")
@@ -62,26 +61,21 @@ public class LookWithMouse : MonoBehaviour
             mouseY *= mouseSensitivity * k_MouseSensitivityMultiplier;
         }
 
-        if (unlockPressed)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        if (lockPressed)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, minAngle, maxAngle);
 
-        if (Cursor.lockState == CursorLockMode.Locked)
+        int invertAxis = invertYAxis ? -1 : 1;
+        transform.localRotation = Quaternion.Euler(invertAxis*xRotation, 0f, 0f);
+
+        playerBody.Rotate(Vector3.up * mouseX * mouseLock);
+    }
+
+    public void LockAndUnlockMouse()
+    {
+        if (mouseLock == 1f)
         {
-            xRotation -= mouseY;
-            xRotation = Mathf.Clamp(xRotation, minAngle, maxAngle);
-
-            int invertAxis = invertYAxis ? -1 : 1;
-            transform.localRotation = Quaternion.Euler(invertAxis*xRotation, 0f, 0f);
-
-            playerBody.Rotate(Vector3.up * mouseX);
+            mouseLock = 0f;
         }
+        else mouseLock = 1f;
     }
 }
