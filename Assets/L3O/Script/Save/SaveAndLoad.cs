@@ -6,11 +6,17 @@ using System;
 
 public class SaveAndLoad : MonoBehaviour
 {
+    public static SaveAndLoad instance;
+
     public SaveData saveData;
+    public ConfigData configData;
 
     private void Awake()
     {
+        if (instance != null) Destroy(this);
+        else instance = this;
         saveData = new SaveData();
+        configData = new ConfigData();
     }
 
     public void SaveToFile()
@@ -36,6 +42,33 @@ public class SaveAndLoad : MonoBehaviour
         else
         {
             saveData = new SaveData();
+        }
+    }
+
+    public void SaveConfigFile()
+    {
+        configData.SaveConfig();
+        string json = JsonUtility.ToJson(configData);
+        Debug.Log(json);
+        if (!File.Exists(Application.persistentDataPath + "/config.save"))
+        {
+            File.Create(Application.persistentDataPath + "/config.save").Dispose();
+        }
+        File.WriteAllText(Application.persistentDataPath + "/config.save", json);
+    }
+
+    public void LoadConfigFile()
+    {
+        if (File.Exists(Application.persistentDataPath + "/config.save"))
+        {
+            string json = File.ReadAllText(Application.persistentDataPath + "/config.save");
+            configData = JsonUtility.FromJson<ConfigData>(json);
+            LoadData.instance.LoadConfig();
+        }
+        else
+        {
+            Debug.Log("Mon script marche pas c'est  chiant");
+            configData = new ConfigData();
         }
     }
 }

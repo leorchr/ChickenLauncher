@@ -2543,6 +2543,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1935355252}
   - component: {fileID: 1935355251}
+  - component: {fileID: 1935355253}
   m_Layer: 0
   m_Name: Save
   m_TagString: Untagged
@@ -2565,6 +2566,8 @@ MonoBehaviour:
   saveData:
     text: bonjour
     playerPosition: {x: 0, y: 0, z: 0}
+  configData:
+    volume: 0
 --- !u!4 &1935355252
 Transform:
   m_ObjectHideFlags: 0
@@ -2580,6 +2583,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1935355253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935355250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 275d28185aff45b4ba9a22a0bc38475b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  masterMixer: {fileID: 24100000, guid: bed9b886dbc88584286f72ef6175ea90, type: 2}
 --- !u!1001 &2034548562
 PrefabInstance:
   m_ObjectHideFlags: 0

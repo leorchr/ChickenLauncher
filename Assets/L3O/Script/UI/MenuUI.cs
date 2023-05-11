@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuUI : MonoBehaviour
 {
+    public static MenuUI instance;
+
     [SerializeField] private GameObject settings;
     [SerializeField] private GameObject volume;
 
     private void Awake()
     {
+        if (instance != null) Destroy(this);
+        else instance = this;
         settings.SetActive(false);
     }
 
@@ -33,6 +38,16 @@ public class MenuUI : MonoBehaviour
     public void CloseSettings()
     {
         settings.SetActive(false);
+    }
+
+    public void VolumeUpdate()
+    {
+        SaveAndLoad.instance.SaveConfigFile();
+    }
+
+    public float GetVolume()
+    {
+        return volume.GetComponent<Slider>().value;
     }
 
 }
