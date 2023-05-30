@@ -12,6 +12,7 @@ public class PauseMenu : MonoBehaviour
     public static bool gameIsPaused;
 
     public GameObject pauseMenu;
+    public GameObject save;
 
     private void Awake()
     {
@@ -42,6 +43,7 @@ public class PauseMenu : MonoBehaviour
     void Pause()
     {
         pauseMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(save);
         LookWithMouse.instance.LockAndUnlockMouse();
 
         Time.timeScale = 0;
@@ -63,5 +65,19 @@ public class PauseMenu : MonoBehaviour
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void GoToMainMenu()
+    {
+        Resume();
+        Cursor.lockState = CursorLockMode.None;
+        SceneManager.LoadScene(0);
+    }
+
+    public void Save()
+    {
+        SaveAndLoad.instance.SaveToFile();
+        Debug.Log(SaveAndLoad.instance.saveData.playerPosition);
+        Debug.Log(SaveAndLoad.instance.saveData.score);
     }
 }

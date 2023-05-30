@@ -3,28 +3,54 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 [Serializable]
 public class SaveData
 {
-    public static SaveData instance;
-
-    public string text = "bonjour";
-    public Vector3 playerPosition = Vector3.zero;
-
+    public Vector3 playerPosition = new Vector3(0f, 2f, 0f);
+    public int score;
 
     public void Save()
     {
-        text = "save";
         playerPosition = PlayerMovement.instance.transform.position;
+    }
+    public void Load()
+    {
+        
+        string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        if (currentScene == "Playground")
+        {
+            PlayerMovement.instance.controller.enabled = false;
+            PlayerMovement.instance.controller.transform.position = playerPosition;
+            PlayerMovement.instance.controller.enabled = true;
+        }
+    }
+}
+
+[Serializable]
+public class ConfigData
+{
+
+    [Range(0f,1f)] public float volume = 1f;
+
+    public void Save()
+    {
+        volume = MenuUI.instance.GetVolume();
     }
 
     public void Load()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        PlayerMovement.instance.controller.Move(playerPosition);
-        PauseMenu.Instance.Resume();
-        Debug.Log("Heeeeeeeeey salut a tous et a toutes les amisssssssssssss, c'est David Lafarge Pokemon");
+        int currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
+
+        if (currentScene == 0)
+        {
+            MenuUI.instance.SetVolume(volume);
+        }
+        else if (currentScene == 1)
+        {
+            GlobalSound.instance.SetVolume(volume);
+        }
     }
 }

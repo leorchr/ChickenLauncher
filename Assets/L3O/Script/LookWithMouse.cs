@@ -65,7 +65,7 @@ public class LookWithMouse : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, minAngle, maxAngle);
 
         int invertAxis = invertYAxis ? -1 : 1;
-        transform.localRotation = Quaternion.Euler(invertAxis*xRotation, 0f, 0f);
+        transform.localRotation = Quaternion.Euler(invertAxis*xRotation * mouseLock, 0f, 0f);
 
         playerBody.Rotate(Vector3.up * mouseX * mouseLock);
     }

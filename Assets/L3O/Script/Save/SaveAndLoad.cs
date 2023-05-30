@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
+using UnityEngine.SceneManagement;
 
 public class SaveAndLoad : MonoBehaviour
 {
     public static SaveAndLoad instance;
 
-    public SaveData saveData;
-    public ConfigData configData;
+    [HideInInspector] public SaveData saveData;
+    [HideInInspector] public ConfigData configData;
 
     private void Awake()
     {
         if (instance != null) Destroy(this);
         else instance = this;
-        saveData = new SaveData();
-        configData = new ConfigData();
+    }
+
+    private void Start()
+    {
+        LoadConfigFile();
     }
 
     public void SaveToFile()
@@ -30,6 +34,16 @@ public class SaveAndLoad : MonoBehaviour
         }
         File.WriteAllText(Application.persistentDataPath + "/data.save", json);
     }
+
+    public void NewSave()
+    {
+        saveData = new SaveData();
+        string json = JsonUtility.ToJson(saveData);
+        Debug.Log(json);
+        File.Create(Application.persistentDataPath + "/data.save").Dispose();
+        File.WriteAllText(Application.persistentDataPath + "/data.save", json);
+    }
+
 
     public void LoadFile()
     {
@@ -47,9 +61,8 @@ public class SaveAndLoad : MonoBehaviour
 
     public void SaveConfigFile()
     {
-        configData.SaveConfig();
+        configData.Save();
         string json = JsonUtility.ToJson(configData);
-        Debug.Log(json);
         if (!File.Exists(Application.persistentDataPath + "/config.save"))
         {
             File.Create(Application.persistentDataPath + "/config.save").Dispose();
@@ -63,11 +76,11 @@ public class SaveAndLoad : MonoBehaviour
         {
             string json = File.ReadAllText(Application.persistentDataPath + "/config.save");
             configData = JsonUtility.FromJson<ConfigData>(json);
-            LoadData.instance.LoadConfig();
+            configData.Load();
         }
         else
         {
-            Debug.Log("Mon script marche pas c'est  chiant");
+            Debug.Log("First Time Running the game");
             configData = new ConfigData();
         }
     }

@@ -179,6 +179,17 @@
                 },
                 {
                     "name": "",
+                    "id": "81fb3cd3-eb69-4383-832e-18dcd4a3bfa8",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "4a93b3d3-82f8-413a-963a-04c461cb1e7a",
                     "path": "<Gamepad>/start",
                     "interactions": "",

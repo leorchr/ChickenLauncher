@@ -9,45 +9,64 @@ public class MenuUI : MonoBehaviour
 {
     public static MenuUI instance;
 
+    [Space]
+    [Header("Panels")]
+    [Space]
+    [SerializeField] private GameObject defaultPanel;
+    [SerializeField] private GameObject settingsPanel;
+
+
+    [Space]
+    [Header("Other")]
+    [Space]
     [SerializeField] private GameObject settings;
-    [SerializeField] private GameObject volume;
+    [SerializeField] private GameObject volumeSlider;
 
     private void Awake()
     {
         if (instance != null) Destroy(this);
         else instance = this;
-        settings.SetActive(false);
     }
 
-    public void Load()
+    private void Start()
+    {
+        defaultPanel.SetActive(true);
+        settingsPanel.SetActive(false);
+    }
+
+    public void Continue()
     {
         SceneManager.LoadScene(1);
     }
 
     public void NewGame()
     {
-        SceneManager.LoadScene(1);
+        SaveAndLoad.instance.NewSave();
+        SceneManager.LoadScene("Playground");
     }
 
     public void OpenSettings()
     {
-        settings.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(volume);
+        EventSystem.current.SetSelectedGameObject(volumeSlider);
+        settingsPanel.SetActive(true);
+        defaultPanel.SetActive(false);
     }
 
     public void CloseSettings()
     {
-        settings.SetActive(false);
-    }
-
-    public void VolumeUpdate()
-    {
-        SaveAndLoad.instance.SaveConfigFile();
+        settingsPanel.SetActive(false);
+        defaultPanel.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(settings);
     }
 
     public float GetVolume()
     {
-        return volume.GetComponent<Slider>().value;
+        return volumeSlider.GetComponent<Slider>().value;
+    }
+
+    public void SetVolume(float volume)
+    {
+        volumeSlider.GetComponent<Slider>().value = volume;
     }
 
 }
